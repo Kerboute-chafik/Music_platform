@@ -1,12 +1,45 @@
 import { Injectable } from '@angular/core';
 import { SpotifyConfiguration } from 'src/environments/environment';
+import Spotify from 'spotify-web-api-js';
+import { User } from '../interfaces/User';
+import { SpotifyUserToUser } from '../Common/spotifyHelpers';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpotifyService {
 
-  constructor() { }
+  spotifyApi: Spotify.SpotifyWebApiJs = null;
+  user: User;
+  constructor() {
+    this.spotifyApi = new Spotify();
+   }
+
+   async initializeUser() {
+    if(!!this.user)
+      return true;
+
+    const token = localStorage.getItem('token');
+
+    if(!token)
+      return false;
+
+    try {
+
+      this.defineAccessToken(token);
+      await this.getSpotifyUser();
+      return !!this.user;
+
+    }catch(ex){
+      return false;
+    }
+  }
+  async getSpotifyUser() {
+    const userInfo = await this.spotifyApi.getMe();
+    this.user = SpotifyUserToUser(userInfo);
+    console.log(this.user);
+  }
 
   getUrlLogin() {
     const authEndpoint = `${SpotifyConfiguration.authEndpoint}?`;
@@ -16,4 +49,17 @@ export class SpotifyService {
     const responseType = `response_type=token&show_dialog=true`;
     return authEndpoint + clientId + redirectUrl + scopes + responseType; 
   }
+
+  getTokenUrlCallback() {
+    if(!window.location.hash)
+      return '';
+      const params = window.location.hash.substring(1).split('&');
+      return params[0].split('=')[1];
+  }
+
+  defineAccessToken(token: string){
+    this.spotifyApi.setAccessToken(token);
+    localStorage.setItem('token', token);
+  }
+
 }
