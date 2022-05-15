@@ -1,0 +1,97 @@
+@import 'variables.scss';
+
+
+:host {
+    max-width: 300px;
+    position: fixed;
+    display: flex;
+    height: 100vh;
+    background-color: $color-secondary;
+    box-shadow: 1px 0px 17px #1db954;
+    overflow-y: hidden;
+    flex-direction: column;
+
+
+    #left-side-bar {
+        flex: 1;
+        flex-direction: column;
+        height: 100%;
+        padding: 0px 40px 0px 40px;
+
+
+        .logo-image {
+            min-height: 120px;
+
+            img {
+                width: 77%;
+            }
+        }
+
+        .Menu-detail-container {
+            width: 100%;
+            &.flex{
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+            }
+            &.option {
+                min-height: 150px;
+                
+
+                *{
+                    margin-bottom:10px ;
+                }
+            }
+
+            button{
+                width: 100%;
+                border: 0;
+                padding: 10px 0px 10px 20px;
+                border-radius: 7px;
+                text-align: left;
+                font-weight: 700;
+                font-size: 13px;
+                color: #37AB00;
+                background-color: transparent;
+                cursor: pointer;
+                span{
+                    vertical-align: middle;
+                    width: 150px;
+                    white-space: nowrap;
+                    margin-left: 15px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+           
+            }
+            button:hover{
+                background-color: #37AB00;
+                color: white;
+            }
+        }
+
+        .Playlist-title{
+            margin: 10px 0px;
+            align-self: flex-start;
+            font-weight: 700;
+            font-size: 12px;
+            color:#0000004d;
+        }
+
+        .playlist-scroll{
+            button{
+                width: 100%;
+                border: 0;
+                border-radius: 7px;
+                text-align: left;
+                font-weight: 700;
+                font-size: 13px;
+                color: black;
+                background-color: #37AB00;
+                cursor: pointer;
+                margin-bottom: 10px;
+                height: 37px;
+            }
+        }
+    }
+}
